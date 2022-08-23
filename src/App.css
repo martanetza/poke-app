@@ -1,38 +1,113 @@
-.App {
+* {
+  color: #4B4343;
+}
+
+h3 {
+  font-size: 25px;
+  margin-bottom: 26px;
+}
+
+#dropdown-basic{
+  background-color: transparent;
+  border: 1px solid #E4E4E4;
+  color: #4B4343;
+  box-shadow: 0px 2px 10px #00000029;
+  width: 320px;
+  height: 50px;
+}
+
+.header-wrap {
+  box-shadow: 0px 3px 6px #00000029;
+}
+
+.card {
+  border: none;
+  box-shadow: 0px 2px 10px #00000029;
+  border-radius: 30px;
+  padding: 30px;
+}
+
+.card img {
+  background-color: #367AAC;
+  border-radius: 30px;
+  width: 100%;
+  height: 250px;
+  object-fit: contain;
+  margin-bottom: 20px;
+}
+
+.card .anchor-wrap {
+  border-top: 1px solid #E4E4E4;
+  padding: 15px 15px 0px;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.card .anchor-wrap a {
+  color: #367AAC;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.single-pokemon-page {
+padding-top: 50px;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.single-pokemon-page .back-btn {
+  background-color: #367AAC;
+  border-radius: 10px;
+  width: 200px;
+  height: 50px;
   color: white;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  left: 0;
+  top: 0;
 }
 
-.App-link {
-  color: #61dafb;
+.single-pokemon-page img.front-img{
+  background-color: #367AAC;
+  border-radius: 30px;
+  height: 622px;
+  width: 622px;
+  object-fit: contain;
+  margin: auto auto 30px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.single-pokemon-page h1 {
+  font-size: 30px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.single-pokemon-page h2.relevant-items-header {
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.single-pokemon-page .columns-wrap {
+  margin-bottom: 50px;
+}
+
+.single-pokemon-page .col {
+  width: fit-content;
+  flex: none;
+}
+
+.single-pokemon-page .accordion {
+  margin-bottom: 30px;
+}
+
+.single-pokemon-page .accordion-item {
+  margin-bottom: 10px;
+  border: 1px solid #E4E4E4;
+  border-radius: 10px;
+  box-shadow: 0px 2px 10px #00000029;
+  padding: 20px;
+}
+
+.single-pokemon-page .accordion-button:not(.collapsed) {
+  background-color: white;
 }

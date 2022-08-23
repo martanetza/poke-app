@@ -1,0 +1,13 @@
+{
+  "editor.formatOnSave": true,
+  "eslint.run": "onSave",
+  "prettier.singleQuote": true,
+  "eslint.codeAction.showDocumentation": {
+    "enable": true
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.alwaysShowStatus": true,
+  "eslint.debug": true,
+}
