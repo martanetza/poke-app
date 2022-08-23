@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Card, Col} from 'react-bootstrap';
-import {Link} from 'react-router-dom';
- 
+import {Link, useNavigate} from 'react-router-dom';
+  
 interface Props {
   id : number;
   imgUrl : string;
@@ -9,9 +9,12 @@ interface Props {
   height : number;
   weight : number;
   abilities : {ability: {name: string}}[];
+  setNewId?: React.Dispatch<React.SetStateAction<number | undefined>>
 }
 
-const PokemonCard: React.FC<Props> = ({id,imgUrl, name, height, weight, abilities}) => (
+const PokemonCard: React.FC<Props> = ({id, imgUrl, name, height, weight, abilities, setNewId}) => {
+const navigate = useNavigate();
+return (
   <Card>  
     <img src={imgUrl} alt="" />
     <h3 className="text-uppercase text-center">{name}</h3>
@@ -27,9 +30,14 @@ const PokemonCard: React.FC<Props> = ({id,imgUrl, name, height, weight, abilitie
       </span>
     </div>
     <div className="anchor-wrap">
-      <Link to={`/pokemon/${id}`}>See Details</Link>
+      <Link 
+	      to={`/pokemon/${id}`}
+	      onClick={setNewId? () => {setNewId(id)} : undefined}
+        >
+        See Details
+      </Link>
     </div>
   </Card>
-)
+)}
 
 export default PokemonCard

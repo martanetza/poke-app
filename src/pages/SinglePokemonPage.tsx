@@ -1,8 +1,9 @@
 /* eslint-disable no-unused-expressions */
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Container, Row, Col, Accordion } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import PokemonCard from "../components/PokemonCard";
+import { ThemeContext } from '../context/themeToggle';
  
 interface Pokemon {
   id : number;
@@ -23,20 +24,28 @@ interface Pokemon {
 }
 
 const SinglePokemonPage: React.FC = () => {
-  const { id } = useParams();
+  const themeContext = useContext(ThemeContext);
   const [pokemon, setPokemon] = useState<Pokemon>()
   const [pokemons, setPokemons] = useState<Pokemon[]>()
+  const [newId, setNewId] = useState<number>();
+  const { id } = useParams();
 
   useEffect(() => {
-      fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
-      .then(response => response.json())
-      .then(data => {
-        setPokemon(data)
-      });
+    setNewId(Number(id))
   }, []);
 
   useEffect(() => {
-    fetch(`https://pokeapi.co/api/v2/pokemon/?limit=3`)
+    window.scrollTo(0, 0);
+    fetch(`https://pokeapi.co/api/v2/pokemon/${newId}`)
+    .then(response => response.json())
+    .then(data => {
+      setPokemon(data)
+    });
+}, [newId]);
+
+  useEffect(() => {
+    const offset = Math.floor(Math.random() * 1000);
+    fetch(`https://pokeapi.co/api/v2/pokemon/?limit=3&offset=${offset}`)
     .then(response => response.json())
     .then(data => {
       const {results} = data;
@@ -46,7 +55,7 @@ const SinglePokemonPage: React.FC = () => {
   }, [pokemon]);
 
   return (
-    <Container fluid className="mb-5 single-pokemon-page">
+    <Container fluid className={`pb-5 single-pokemon-page ${themeContext ? themeContext.themeMode : ''}`}>
       {pokemon &&
         <Container>
           <Row className="position-relative">
@@ -144,7 +153,7 @@ const SinglePokemonPage: React.FC = () => {
             {pokemons &&
               pokemons.map((pokemon) => (
                 <Col xs={6} md={4} lg={3} key={pokemon.id} className="mb-3">
-                  <PokemonCard id={pokemon.id} imgUrl={pokemon.sprites.front_default} name={pokemon.name} height={pokemon.height} weight={pokemon.weight} abilities={pokemon.abilities}/>
+                  <PokemonCard id={pokemon.id} imgUrl={pokemon.sprites.front_default} name={pokemon.name} height={pokemon.height} weight={pokemon.weight} abilities={pokemon.abilities} setNewId={setNewId}/>
                 </Col>
             ))}
           </Row>
