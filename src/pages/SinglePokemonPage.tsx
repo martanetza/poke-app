@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-expressions */
 import React, {useEffect, useState} from "react";
 import { Container, Row, Col, Accordion } from 'react-bootstrap';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import PokemonCard from "../components/PokemonCard";
  
 interface Pokemon {
@@ -50,7 +50,7 @@ const SinglePokemonPage: React.FC = () => {
       {pokemon &&
         <Container>
           <Row className="position-relative">
-              <a href="/" className="btn back-btn">Back</a>          
+              <a href="#/" className="btn back-btn">Back</a>          
               <img className="front-img" src={pokemon.sprites.front_default} alt="" />
            </Row>
           <Row>

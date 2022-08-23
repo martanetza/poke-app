@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Card, Col} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
  
 interface Props {
   id : number;
@@ -26,7 +27,7 @@ const PokemonCard: React.FC<Props> = ({id,imgUrl, name, height, weight, abilitie
       </span>
     </div>
     <div className="anchor-wrap">
-      <a href={`/pokemon/${id}`}>See Details</a>
+      <Link to={`/pokemon/${id}`}>See Details</Link>
     </div>
   </Card>
 )

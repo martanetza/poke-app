@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import "./App.css";
 import PokemonList from './pages/PokemonList';
 import SinglePokemonPage from './pages/SinglePokemonPage';
