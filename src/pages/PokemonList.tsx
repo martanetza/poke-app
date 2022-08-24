@@ -69,9 +69,6 @@ useEffect(() => {
 }, [sortValue, pokemonsReady])
 
 useEffect(() => {
-  if (localStorage.getItem('filtredPokemons')) {
-    setFiltredPokemons(JSON.parse(localStorage.getItem('filtredPokemons') || ''))
-  } else {
     const filtred = [...pokemons.filter((el) => el.name.includes(searchValue))]
     if (filtred.length > 0) {
       localStorage.setItem('filtredPokemons', JSON.stringify(filtred));
@@ -79,8 +76,7 @@ useEffect(() => {
     } else {
       setFiltredPokemons([])
     }
-  }
-}, [searchValue])
+ }, [searchValue])
 
 useEffect(() => {
   setOffset(itemsPerPage * (currentPage - 1))
