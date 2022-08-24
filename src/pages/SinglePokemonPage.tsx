@@ -3,7 +3,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { Container, Row, Col, Accordion } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import PokemonCard from "../components/PokemonCard";
-import { ThemeContext } from '../context/themeToggle';
+import { ThemeContext } from '../context/themeContext';
  
 interface Pokemon {
   id : number;

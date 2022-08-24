@@ -12,9 +12,7 @@ interface Props {
   setNewId?: React.Dispatch<React.SetStateAction<number | undefined>>
 }
 
-const PokemonCard: React.FC<Props> = ({id, imgUrl, name, height, weight, abilities, setNewId}) => {
-const navigate = useNavigate();
-return (
+const PokemonCard: React.FC<Props> = ({id, imgUrl, name, height, weight, abilities, setNewId}) => (
   <Card>  
     <img src={imgUrl} alt="" />
     <h3 className="text-uppercase text-center">{name}</h3>
@@ -38,6 +36,6 @@ return (
       </Link>
     </div>
   </Card>
-)}
+)
 
 export default PokemonCard

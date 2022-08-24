@@ -1,19 +1,25 @@
-import React, {useContext} from "react";
-import { ThemeContext } from '../context/themeToggle';
- 
-interface Props {
-  // itemsPerPage : number;
-  // setItemsPerPage : React.Dispatch<React.SetStateAction<number>>
-} 
+import React, { useContext, useEffect } from "react";
+import { ThemeContext } from '../context/themeContext';
 
-const ThemeToggleButton: React.FC<Props> = () => {
+const ThemeToggleButton: React.FC = () => {
   const themeContext = useContext(ThemeContext);
+
+  useEffect(() => {
+    if ( localStorage.getItem('themeMode') === 'dark-theme' ) {
+      const switchButton: HTMLInputElement | null = document.querySelector('.switch input');
+      if ( switchButton ) {
+        switchButton.checked = true;
+      }
+    }
+  }, []);
 
   const handleOnChange = (checked: boolean) => {
     if (checked) {
-      themeContext?.setThemeMode('dark-theme')
+      themeContext?.setThemeMode('dark-theme');
+      localStorage.setItem('themeMode', 'dark-theme');
     } else {
-      themeContext?.setThemeMode('light-theme')
+      themeContext?.setThemeMode('light-theme');
+      localStorage.setItem('themeMode', 'light-theme');
     }
   }
 

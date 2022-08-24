@@ -5,7 +5,7 @@ import PokemonCard from "../components/PokemonCard";
 import SearchFrom from "../components/SearchForm";
 import SortValueDropdown from "../components/SortValueDropdown";
 import ThemeToggleButton from "../components/ThemeToggleButton"
-import { ThemeContext } from '../context/themeToggle';
+import {ThemeContext} from '../context/themeContext';
 
  
 interface Pokemon {
@@ -20,7 +20,6 @@ interface Pokemon {
 const PokemonList: React.FC = () => {
 const themeContext = useContext(ThemeContext);
 const [pokemons, setPokemons] = useState<Pokemon[]>([]);
-const [sortedPokemons, setSortedPokemons] = useState<Pokemon[]>([]);
 const [filtredPokemons, setFiltredPokemons] = useState<Pokemon[]>([]);
 const [itemsPerPage, setItemsPerPage] = useState(8);
 const [currentPage, setCurrentPage] = useState(1);
@@ -28,6 +27,13 @@ const [totalPageNumber, setTotalPageNumber] = useState(0);
 const [offset, setOffset] = useState(0);
 const [sortValue, setSortValue] = useState<string | null>(null);
 const [searchValue, setSearchValue] = useState<string>('');
+const [pokemonsReady, setPokemonsReady] = useState(false);
+
+useEffect(() => {
+  if (localStorage.getItem('sortValue')) {
+    setSortValue(localStorage.getItem('sortValue'))
+  }
+}, [])
 
 useEffect(() => {
   if (filtredPokemons.length === 0 || !searchValue) {
@@ -38,36 +44,45 @@ useEffect(() => {
       setTotalPageNumber(Math.ceil(count / itemsPerPage));
       const promisesArray = results.map((result: { url: string}) => fetch(result.url).then(response => response.json()));
       return Promise.all(promisesArray);
-    }).then((data: Pokemon[]) => setPokemons(data));
+    }).then((data: Pokemon[]) => {
+      setPokemons(data);
+      setPokemonsReady(true);
+    });
   } else {
     setPokemons(filtredPokemons);
   }
 }, [itemsPerPage, offset, filtredPokemons, searchValue])
 
 useEffect(() => {
-  if (sortValue === 'name') {
-    setSortedPokemons(pokemons.sort((a: Pokemon, b: Pokemon) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0)))
-  } else if (sortValue === 'height') {
-    setSortedPokemons(pokemons.sort((a: Pokemon,b: Pokemon) => a.height - b.height));
-  } else if (sortValue === 'weight') {
-    setSortedPokemons(pokemons.sort((a: Pokemon,b: Pokemon) => a.weight - b.weight));
+  if(pokemonsReady) {
+    if (sortValue) {
+      localStorage.setItem('sortValue', sortValue);
+    }
+    if (sortValue === 'name') {
+      setPokemons([...pokemons.sort((a: Pokemon, b: Pokemon) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))])
+    } else if (sortValue === 'height') {
+      setPokemons([...pokemons.sort((a: Pokemon, b: Pokemon) => a.height - b.height)]);
+    } else if (sortValue === 'weight') {
+      setPokemons([...pokemons.sort((a: Pokemon, b: Pokemon) => a.weight - b.weight)]);
+    }
   } 
-}, [sortValue])
+}, [sortValue, pokemonsReady])
 
 useEffect(() => {
-  const filtred = [...pokemons.filter((el) => el.name.includes(searchValue))]
-  if (filtred.length > 0) {
-    setFiltredPokemons(filtred)
+  if (localStorage.getItem('filtredPokemons')) {
+    setFiltredPokemons(JSON.parse(localStorage.getItem('filtredPokemons') || ''))
   } else {
-    setFiltredPokemons([])
+    const filtred = [...pokemons.filter((el) => el.name.includes(searchValue))]
+    if (filtred.length > 0) {
+      localStorage.setItem('filtredPokemons', JSON.stringify(filtred));
+      setFiltredPokemons(filtred)
+    } else {
+      setFiltredPokemons([])
+    }
   }
 }, [searchValue])
 
 useEffect(() => {
-   setPokemons([...sortedPokemons])
-}, [sortedPokemons])
-
-useEffect(()=>{
   setOffset(itemsPerPage * (currentPage - 1))
 }, [currentPage])
 
